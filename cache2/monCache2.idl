@@ -1,0 +1,14 @@
+
+module monCache2 {
+  typedef wstring  Donnee;
+  typedef wstring  Reference;
+
+  exception IOException {};
+  exception DoesNotExist { Reference r; };
+
+  interface FileSystemCache {
+    boolean lireM (in Reference ref, out Donnee data);
+    boolean ecrireM (in Reference ref, in Donnee data);
+    boolean majCache (in Reference ref, in Donnee data);
+  };
+};

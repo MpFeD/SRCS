@@ -1,0 +1,20 @@
+/* AUTOMATICALLY GENERATED ON Fri May 13 17:41:58 CEST 2016*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.EJBMethodPermission "CalcBeanFul", "add,Remote,double,double";
+  permission javax.security.jacc.EJBMethodPermission "CalcBean", "mult,Remote,double,double";
+  permission javax.security.jacc.EJBMethodPermission "CalcBean", "add,Remote,double,double";
+  permission javax.security.jacc.EJBMethodPermission "CalcBeanFul", "getDernierResultat,Remote,";
+  permission javax.security.jacc.EJBMethodPermission "CalcBean", "sub,Remote,double,double";
+  permission javax.security.jacc.EJBMethodPermission "CalcBeanFul", "mult,Remote,double,double";
+  permission javax.security.jacc.EJBMethodPermission "CalcBeanFul", "div,Remote,double,double";
+  permission javax.security.jacc.EJBMethodPermission "CalcBean", "div,Remote,double,double";
+  permission javax.security.jacc.EJBMethodPermission "CalcBeanFul", "sub,Remote,double,double";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.EJBRoleRefPermission "CalcBeanFul", "**";
+  permission javax.security.jacc.EJBRoleRefPermission "CalcBean", "**";
+};
+

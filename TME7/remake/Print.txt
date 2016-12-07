@@ -1,0 +1,144 @@
+package remake;
+import java.util.*;
+import javax.naming.*;
+
+public class Client { 
+    public static void main(String args[]) throws Exception {
+	Hashtable<String,String> env = new Hashtable<String,String>();
+	env.put(Context.PROVIDER_URL, "127.0.0.1:PORTNUMBER");	
+
+	
+	javax.naming.Context ic	= new javax.naming.InitialContext(env); 
+	CalcItf bean = (CalcItf)ic.lookup("java:global/calc/CalcBean!remake.CalcItf"); 
+	double res = bean.add(3,6);
+	System.out.println(res);
+
+	try{
+	    res = bean.div(1,0);
+	}catch (DivByZeroException e){
+	    
+	}
+
+
+	CalcItfFul beanFul = (CalcItfFul)ic.lookup("java:global/calc/CalcBeanFul!remake.CalcItfFul"); 
+
+	res = beanFul.add(1,1);
+	res = beanFul.add(beanFul.getDernierResultat(),1);
+	System.out.println(res);
+    } 
+} 
+
+
+
+
+
+
+
+
+
+
+
+package remake;
+
+import javax.ejb.Stateless; 
+@Stateless
+public class CalcBean implements CalcItf { 
+    public double add(double v1,double v2) {return v1+v2;} 
+    public double sub(double v1,double v2) {return v1-v2;} 
+    public double mult(double v1,double v2) {return v1*v2;} 
+    public double div(double v1,double v2)  throws DivByZeroException{
+	if(v2 == 0)
+	    throw new DivByZeroException();
+
+	return v1/v2;
+
+    } 
+} 
+
+
+
+
+
+
+
+
+package remake;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface CalcItf {
+
+  public double add(double d1, double d2);
+
+  public double sub(double d1, double d2);
+
+  public double mult(double d1, double d2);
+
+  public double div(double d1, double d2) throws DivByZeroException;
+
+}
+
+
+
+
+
+
+
+package remake;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface CalcItfFul {
+
+  public double add(double d1, double d2);
+
+  public double sub(double d1, double d2);
+
+  public double mult(double d1, double d2);
+
+  public double div(double d1, double d2) throws DivByZeroException;
+
+    public double getDernierResultat();
+}
+
+
+
+
+
+
+
+
+
+
+package remake;
+
+import javax.ejb.Stateful; 
+@Stateful
+public class CalcBeanFul implements CalcItfFul {
+
+    private Double dernierResultat=new Double(0);
+    
+    public double add(double v1,double v2) {
+	dernierResultat=v1+v2;
+	return v1+v2;} 
+    public double sub(double v1,double v2) {
+	dernierResultat=v1+v2;
+	return v1-v2;} 
+    public double mult(double v1,double v2) {
+	dernierResultat=v1*v2;
+	return v1*v2;} 
+    public double div(double v1,double v2)  throws DivByZeroException{
+	if(v2 == 0)
+	    throw new DivByZeroException();
+
+	dernierResultat=v1/v2;
+	return v1/v2;
+    }
+    
+    public double getDernierResultat(){
+	return dernierResultat;
+    }
+    
+} 

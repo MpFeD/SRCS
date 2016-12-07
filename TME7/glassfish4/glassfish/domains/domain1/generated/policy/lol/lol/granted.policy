@@ -1,0 +1,15 @@
+/* AUTOMATICALLY GENERATED ON Fri May 13 19:07:08 CEST 2016*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.EJBMethodPermission "DirectoryEntry", "addEntry,Remote,java.lang.String,java.lang.String";
+  permission javax.security.jacc.EJBMethodPermission "DirectoryEntry", "removeEntry,Remote,java.lang.String,java.lang.String";
+  permission javax.security.jacc.EJBMethodPermission "DirectoryEntry", "listAllEntries,Remote,";
+  permission javax.security.jacc.EJBMethodPermission "DirectoryEntry", "removeEntries,Remote,java.lang.String";
+  permission javax.security.jacc.EJBMethodPermission "DirectoryEntry", "listEntries,Remote,java.lang.String";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.EJBRoleRefPermission "DirectoryEntry", "**";
+};
+

@@ -1,0 +1,9 @@
+module tabledehach {
+  
+  interface Modif {
+    boolean containsKey(in long key);
+    long get(in long key);
+    void put(in long key, in long value);
+  };
+  
+};

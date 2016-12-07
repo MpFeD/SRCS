@@ -1,0 +1,31 @@
+public class DirectoryEntry {
+
+    private String nom;
+    private String mail;
+
+    public DirectoryEntry(){}
+
+    public DirectoryEntry(String nom,String mail){
+	this.nom=nom;
+	this.mail=mail;
+    }
+    
+    @Id 
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    
+    public long getNom() {
+	return nom;
+    } 
+    public void setNom(String nom) {
+	this.nom = nom;
+    } 
+    public String getMail() {
+	return mail;
+    } 
+    public void setMail(String Mail) {
+	this.mail = mail;
+    } 
+    
+}
+
+

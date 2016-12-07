@@ -1,0 +1,46 @@
+import javax.ejb.Stateless;
+import java.util.*;
+
+@Stateless(name="annuaire")
+public class DirectoryServerIF {
+
+    private ArrayList<ArrayList<String>> entry=new ArrayList<ArrayList<String>>();
+    
+    public void listEntries(String nom){
+        int index = entry.indexOf(nom);
+	for(int i=0;i<entry.get(index).size();i++)
+	    System.out.println(entry.get(index).get(i));	    
+    }
+
+    public void listAllEntries(){
+	for(int i=0;i<entry.size();i++){
+	    System.out.println(entry.get(i) +" : ");
+	    for(int j=0;i<entry.get(i).size();j++)
+		System.out.println(entry.get(i).get(j));
+	}
+    }
+
+    public void addEntry(String nom,String mail){
+	int index = entry.indexOf(nom);
+	if(index == -1){
+	    ArrayList<String> a = new ArrayList<String>();
+	    a.add(nom);
+	    entry.add(a);
+	    entry.get(entry.size()-1).add(mail);
+	}else
+	    entry.get(index).add(mail);
+    }
+
+    public void removeEntry(String nom, String mail){
+	int index = entry.indexOf(nom);
+	if(index != -1)
+	    entry.get(index).remove(mail);
+    }
+
+    public void removeEntries(String nom){
+	int index = entry.indexOf(nom);
+	if(index != -1)
+	    entry.get(index).clear();
+    }
+	
+}

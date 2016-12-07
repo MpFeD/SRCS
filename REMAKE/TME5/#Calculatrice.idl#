@@ -1,0 +1,14 @@
+module calculatrice {
+
+  exception DivisionParZeroException
+  {
+  };
+  
+  interface Operation {
+    float add(in float op1, in float op2);
+    float sub(in float op1, in float op2);
+    float mult(in float op1, in float op2);
+    float div(in float op1, in float op2) raises (DivisionParZeroException);
+  };
+  
+};

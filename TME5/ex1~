@@ -1,0 +1,6 @@
+module calculatrice{
+interface fonctions{
+public float add(in float a, in float b);
+public float sub(in float a, in float b);
+}
+}

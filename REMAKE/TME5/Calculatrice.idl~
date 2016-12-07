@@ -1,0 +1,42 @@
+module calculatrice {
+
+  exception DivisionParZeroException
+  {
+  };
+
+
+  
+  interface Operation {
+    float add(in float op1, in float op2);
+    float sub(in float op1, in float op2);
+    float mult(in float op1, in float op2);
+    float div(in float op1, in float op2) raises (DivisionParZeroException);
+  };
+
+
+  /*struct OperationStruct {
+    long a;
+    long b;
+  };*/
+
+
+
+
+  
+};
+
+/*
+module pim{
+   
+  typedef wstring<32> tadresse;
+  module pam {
+    typedef wstring<16> tnom;
+  };
+  module  poum
+  {
+    struct    pom {
+      pam::tnom  nom;            
+      tadresse adresse;
+    };
+  };
+};*/

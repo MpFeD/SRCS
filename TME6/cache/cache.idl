@@ -1,0 +1,12 @@
+
+
+module cache {
+  typedef wstring  Donnee;
+  typedef wstring  Reference;
+
+  exception IOException {};
+  exception DoesNotExist { Reference r; };
+
+  interface FileSystem {
+  };
+};

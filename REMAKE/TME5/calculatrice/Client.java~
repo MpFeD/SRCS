@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Properties;
+import org.omg.CORBA.ORB;
+import org.omg.CORBA.Object;
+
+public class Client {
+
+    public void restore(String fileName, ORB orb) {
+	BufferedReader br;
+	String ior = null;
+	try {
+	    br = new BufferedReader(new FileReader(fileName));
+	    ior = br.readLine();
+	    br.close();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+	return orb.string_to_object(ior);
+    }
+    
+    public static void main(String[] args) {
+	ORB orb = ORB.init(args, null); 
+	org.omg.CORBA.Object obj = restore("fichier.ior", orb);
+        Operation operation = CompteHelper.narrow(obj);
+
+	
+	System.out.println("Resultat de 3 + 3 ="  + operation.add(3,3));
+    }
+    
+}

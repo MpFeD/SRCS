@@ -1,0 +1,7 @@
+module table{
+interface tabledehachich{
+boolean contains(in string cle);
+Object get(in string cle);
+void put(in string cle, in Object valeur);
+};
+};

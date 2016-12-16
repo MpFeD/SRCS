@@ -1,0 +1,172 @@
+package Remake;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface Annuaire extends Remote {
+	public void setNom(String nom) throws RemoteException;
+	public void setNum(String num) throws RemoteException;
+	public String getNom(String num) throws RemoteException;
+	public void setPersonne(Personne p) throws RemoteException;
+	public Personne getPersonne() throws RemoteException;
+	public void setPersonne(String prenom, String adresse) throws RemoteException;
+	public String getPrenom() throws RemoteException;
+	public int getCpt() throws RemoteException;
+	public String getAdresse() throws RemoteException;
+}
+
+
+package Remake;
+
+import java.rmi.RemoteException;
+
+public class AnnuaireImpl implements Annuaire {
+	private String nom;
+	private String num;
+	private Personne p;
+
+	public AnnuaireImpl(String nom, String num) throws RemoteException {
+		this.nom = nom;
+		this.num = num;
+	}
+
+	@Override
+	public void setNom(String nom) throws RemoteException {
+		this.nom = nom;
+	}
+
+	@Override
+	public void setNum(String num) throws RemoteException {
+		this.num = num;
+	}
+
+	@Override
+	public String getNom(String num) throws RemoteException {
+		if (num.equals(this.num))
+			return this.nom;
+		return "";
+	}
+
+	@Override
+	public void setPersonne(Personne p) throws RemoteException {
+		this.p=p;
+	}
+	
+	@Override
+	public void setPersonne(String prenom, String adresse) throws RemoteException {
+		this.p=new Personne(prenom, adresse);
+	}
+
+	@Override
+	public Personne getPersonne() throws RemoteException {
+		return p;
+	}
+	@Override
+	public String getPrenom() throws RemoteException {
+		return p.getPrenom();
+	}
+	@Override
+	public int getCpt() throws RemoteException {
+		return p.getCpt();
+	}
+
+	@Override
+	public String getAdresse() throws RemoteException {
+		return p.getAdresse();
+	}
+	
+
+}
+
+
+package Remake;
+
+import java.io.Serializable;
+
+public class Personne implements Serializable {
+	private int cpt = 0;
+	String prenom;
+	String adresse;
+	
+	public Personne(String prenom, String adresse){
+		this.prenom=prenom;
+		this.adresse=adresse;
+	}
+	
+	public String getPrenom() {
+		return prenom;
+	}
+
+
+	public String getAdresse() {
+		return adresse;
+	}
+	
+	
+	public int getCpt(){
+		return ++cpt;
+	}
+
+}
+
+
+package Remake;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// Chiffrement c = new Chiffrement("/users/nfs/Etu5/3000755/abc");
+		Registry r;
+		try {
+			r = LocateRegistry.getRegistry(1099);
+			Annuaire a = (Annuaire) r.lookup("Booba");
+			System.out.println("le numéro associé a 92izi est "
+					+ a.getNom("92izi") + " son prenom est "
+					+ a.getPrenom() + "son adresse est "
+					+ a.getAdresse()+ "nombre de fois recherché : "+ a.getCpt());
+
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+}
+
+
+package Remake;
+
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+
+public class MainServer {
+
+	public static void main(String[] args) {
+		try {
+			Annuaire a = new AnnuaireImpl("Booba", "92izi");
+			a.setPersonne("B2o", "92 les pyramides");
+			UnicastRemoteObject.exportObject(a, 0);
+			Registry r = LocateRegistry.createRegistry(1099);
+			r.bind("Booba", a);
+
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (AlreadyBoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}
